@@ -17,17 +17,17 @@ def create_or_update_existing_sheets(df):
     Updates an existing spreadsheet and adds a pandas DataFrame.
     """
     creds = None
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    if os.path.exists("src/token.json"):
+        creds = Credentials.from_authorized_user_file("src/token.json", SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "credentials.json", SCOPES
+                "src/token.json", SCOPES
             )
             creds = flow.run_local_server(port=0)
-        with open("token.json", "w") as token:
+        with open("src/token.json", "w") as token:
             token.write(creds.to_json())
 
     try:
@@ -48,9 +48,9 @@ def create_or_update_existing_sheets(df):
             print('Spreadsheet ID: {0}'.format(spreadsheet.get('spreadsheetId')))
             spreadsheet_id = spreadsheet.get('spreadsheetId')
         
-        is_active = os.getenv("IS_ACTIVE")
+        is_active = os.getenv("IS_ACTIVE", False)
         
-        if is_active:
+        if is_active in [True, "True"]:
             # Convert the DataFrame to a list of lists and include the header
             values = [df.columns.tolist()] + df.values.tolist()
 

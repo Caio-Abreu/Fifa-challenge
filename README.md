@@ -11,7 +11,8 @@ This project scrapes data from the Wikipedia page for FIFA World Cup finals and 
 ## How to Run
 
 1. Set the `SPREADSHEET_ID` environment variable to the ID of your Google Sheets document. If this variable is not set, a new Google Sheets document will be created.
-2. Run `main.py`.
+2. Set the `IS_ACTIVE` environment variable to activate or deactivate the fill of text in spreadsheet.
+3. Run `main.py`.
 
 ## Requirements
 
